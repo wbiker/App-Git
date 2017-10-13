@@ -1,0 +1,19 @@
+{
+  "authors" : [
+    "wolfgangbanaston"
+  ],
+  "build-depends" : [ ],
+  "depends" : [ ],
+  "description" : "blah blah blah",
+  "license" : "Artistic-2.0",
+  "name" : "App::Git",
+  "perl" : "6.c",
+  "provides" : {
+    "App::Git" : "lib/App/Git.pm6"
+  },
+  "resources" : [ ],
+  "source-url" : "",
+  "tags" : [ ],
+  "test-depends" : [ ],
+  "version" : "0.0.1"
+}
