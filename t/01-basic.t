@@ -30,4 +30,6 @@ is $rep.branch-name, "test", "New test after checkout";
 $rep.checkout("master");
 is $rep.branch-name, "master", "Back at master again";
 
+# todo: add "pull" tests.
+
 run <rm -rf>, $test-repo;

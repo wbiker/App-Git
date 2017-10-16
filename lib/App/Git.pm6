@@ -1,12 +1,12 @@
 use v6.c;
 
-unit class App::Git:ver<0.0.1>;
+unit class App::Git:ver<0.0.2>;
 
 =begin pod
 
 =head1 NAME
 
-App::Git - blah blah blah
+App::Git - A minimal git interface
 
 =head1 SYNOPSIS
 
@@ -14,15 +14,15 @@ App::Git - blah blah blah
 
 =head1 DESCRIPTION
 
-App::Git is ...
+App::Git is a minimal git interface to the git executable. All calls are made via command line.
 
 =head1 AUTHOR
 
-wolfgangbanaston <wolfgangbanaston@sophos.com>
+wbiker <wbiker@gmx.at>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2017 wolfgangbanaston
+Copyright 2017 wbiker
 
 This library is free software; you can redistribute it and/or modify it under the Artistic License 2.0.
 
@@ -57,6 +57,14 @@ method get-all-branches() {
 method branch-name() {
     my $output = self!get-git-output(["rev-parse", "--abbrev-ref", "HEAD"]);
     return $output.slurp-rest.chomp;
+}
+
+method pull(:$remote?, :$branch?) {
+    if $remote and $branch {
+        return self!get-git-output(['pull', $remote, $branch]);
+    }
+
+    self!get-git-output(['pull']);
 }
 
 method !get-git-output(@command) {
