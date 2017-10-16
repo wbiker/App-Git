@@ -6,6 +6,7 @@ use App::Git;
 
 # create test repository. At the moment unix only.
 my $test-repo = IO::Spec::Unix.catdir($*TMPDIR, 'appgittestrepo');
+run <rm -rf>, $test-repo if $test-repo.IO.e;
 $test-repo.IO.mkdir;
 run 'git', '-C', $test-repo, 'init', :out;
 run 'touch', "$test-repo/testfile";
@@ -14,7 +15,7 @@ run <git -C>, $test-repo, <commit -m>, "test file commit", :out;
 
 my $rep = App::Git.new(repository-path => $test-repo);
 
-is $rep.version, "2.14.1", "method version returned version.";
+is $rep.version, "2.5.5", "method version returned version.";
 is $rep.branch-name, "master", "Proper branch name.";
 
 # create second branch
