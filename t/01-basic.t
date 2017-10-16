@@ -15,7 +15,7 @@ run <git -C>, $test-repo, <commit -m>, "test file commit", :out;
 
 my $rep = App::Git.new(repository-path => $test-repo);
 
-is $rep.version, "2.5.5", "method version returned version.";
+like $rep.version(), /'git version' \s \d+ '.' \d+ '.' \d+/, "method version returned version.";
 is $rep.branch-name, "master", "Proper branch name.";
 
 # create second branch
