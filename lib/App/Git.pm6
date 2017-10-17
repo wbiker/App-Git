@@ -43,7 +43,7 @@ method get-all-branches() {
 
     my @branches;
     for $output.lines -> $line {
-        if $line ~~ /(\w+)/ {
+        if $line ~~ /(<[\w . /]>+)/ {
             @branches.push(~$0);
         }
     }
