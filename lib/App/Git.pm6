@@ -31,7 +31,7 @@ This library is free software; you can redistribute it and/or modify it under th
 has $.repository-path;
 
 method version() {
-    return self!get-git-output(["--version"]).slurp-rest;
+    return self!get-git-output(["--version"]);
 }
 
 method checkout($branch-name) {
@@ -42,7 +42,7 @@ method get-all-branches() {
     my $output = self!get-git-output(["branch", "-a"]);
 
     my @branches;
-    for $output.lines -> $line {
+    for $output.split('\n').lines -> $line {
         if $line ~~ /(<[\w . /]>+)/ {
             @branches.push(~$0);
         }
@@ -53,7 +53,7 @@ method get-all-branches() {
 
 method branch-name() {
     my $output = self!get-git-output(["rev-parse", "--abbrev-ref", "HEAD"]);
-    return $output.slurp-rest.chomp;
+    return $output.chomp;
 }
 
 method pull(:$remote?, :$branch?) {
@@ -64,11 +64,15 @@ method pull(:$remote?, :$branch?) {
     self!get-git-output(['pull']);
 }
 
+method status() {
+    return self!get-git-output(['status']).chomp;
+}
+
 method !get-git-output(@command) {
     my $proc = run <git -C>, $!repository-path, |@command, :out, :err;
     if $proc.exitcode != 0 {
         die "Command failed: " ~ @command.join(' ') ~ " - " ~ $proc.err.slurp-rest.chomp;
     }
 
-    return $proc.out;
+    return $proc.out.slurp;
 }
